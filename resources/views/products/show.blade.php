@@ -25,9 +25,8 @@
                                 </div>
                             </div>
                             <div class="mt-3">
-                                <label class="text-gray-700 text-sm" for="count">Color:</label>
                                 <div class="flex items-center mt-1">
-                                     {{ $product->variations->sortBy('order')->groupBy('type')->first() }}
+                                    <livewire:product-selector :product="$product" />
                                     {{-- <button class="h-5 w-5 rounded-full bg-blue-600 border-2 border-blue-200 mr-2 focus:outline-none"></button>
                                     <button class="h-5 w-5 rounded-full bg-teal-600 mr-2 focus:outline-none"></button>
                                     <button class="h-5 w-5 rounded-full bg-pink-600 mr-2 focus:outline-none"></button> --}}
