@@ -4,7 +4,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200 grid grid-cols-2 gap-4">
                     <div class="col-span-1 grid">
-                        <img class="h-full w-full rounded-md object-cover max-w-lg mx-auto" src="https://images.unsplash.com/photo-1578262825743-a4e402caab76?ixlib=rb-1.2.1&auto=format&fit=crop&w=1051&q=80" alt="Nike Air">
+                        <livewire:product-gallery :product="$product" />
                     </div>
                     <div class="col-span-1 p-6 space-y-6">
                         <div>
