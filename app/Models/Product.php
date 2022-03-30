@@ -32,4 +32,10 @@ class Product extends Model implements HasMedia
         ->fit(Manipulations::FIT_CROP,200,200);
     }
 
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('default')->useFallbackUrl('/storage/no-product-image.png');
+    }
+
 }
