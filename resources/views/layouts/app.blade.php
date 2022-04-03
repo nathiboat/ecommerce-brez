@@ -21,7 +21,7 @@
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
             <livewire:navigation />
-
+            
             @isset($header)
                 <!-- Page Heading -->
                 <header class="bg-white shadow">
@@ -36,7 +36,8 @@
                 {{ $slot }}
             </main>
         </div>
-        
+        <x-notification />
+    
         @livewireScripts
     </body>
 </html>
