@@ -19,6 +19,16 @@ class Cart implements CartInterface
         return $this->session->has(config('cart.session.key'));
     }
 
+    public function contents()
+    {
+        return $this->instance()->variations;
+    }
+
+    public function contentsCount()
+    {
+        return $this->contents()->count();
+    }
+
 
     public function create(?User $user = null)
     {
@@ -31,6 +41,11 @@ class Cart implements CartInterface
         $instance->save();
 
         $this->session->put(config('cart.session.key'), $instance->uuid); 
+    }
+
+    protected function instance()
+    {
+        return ModelsCart::whereUuid($this->session->get(config('cart.session.key')))->first();
     }
     
 }
