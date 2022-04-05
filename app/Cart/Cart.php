@@ -29,6 +29,20 @@ class Cart implements CartInterface
         return $this->contents()->count();
     }
 
+    public function subtotal()
+    {
+        return $this->instance()->variations
+                ->reduce(function ($carry, $variation) {
+                    return $carry + ($variation->price * $variation->pivot->quantity);
+                });
+    }
+
+    public function formattedSubtotal()
+    {
+        return  money($this->subtotal());
+    }
+
+
 
     public function create(?User $user = null)
     {
