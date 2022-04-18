@@ -3,7 +3,9 @@
 namespace App\Http\Livewire;
 
 use App\Models\Product;
+use App\Models\Variation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 
 class ProductBrowser extends Component
@@ -22,10 +24,32 @@ class ProductBrowser extends Component
             return $query->whereHas('categories', function ($categories) {
                 $categories->where('category_id', $this->category->id);
             });
-        })->get(); 
+        })->get();
+        
+              
+        $filters = DB::table('variations')->get()
+            ->groupBy('type')->toArray(); 
+
+        $attrs = [];
+
+        foreach ($filters as $key => $value) {
+            
+            $attrs[$key] = [];
+            foreach ($value as  $item_value){
+                
+                if(array_key_exists($item_value->title ,$attrs[$key]) ){
+                    $attrs[$key][$item_value->title] = $attrs[$key][$item_value->title] + 1;
+                }else {
+                    $attrs[$key][$item_value->title] = 1;
+                }
+            }
+
+        }   
+ 
 
         return view('livewire.product-browser', [
             'products'=> $products,
+            'filters' => $attrs
         ]);
     }
 }

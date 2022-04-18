@@ -13,7 +13,7 @@
                 </ul>
             </div>
 
-            <div class="space-y-6">
+            <div class="space-y-1">
                 <div class="space-y-1">
                     <div class="font-semibold">Max price ($0)</div>
                     <div class="flex items-center space-x-2">
@@ -22,10 +22,14 @@
                 </div>
 
                 <div class="space-y-1">
-                    <div class="font-semibold">Filter title</div>
-                    <div class="flex items-center space-x-2">
-                        <input type="checkbox" id="" value=""> <label for="">Filter (count)</label>
-                    </div>
+                    @foreach ($filters as $title => $filter)
+                        <div class="font-semibold">{{ Str::title($title) }} </div>
+                        @foreach ($filter as $option => $count)
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="" value=""> <label for="">{{ Str::title($option)}} ({{$count }})</label>
+                            </div>   
+                        @endforeach
+                    @endforeach
                 </div>
             </div>
         </div>
