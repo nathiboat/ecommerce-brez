@@ -26,17 +26,8 @@ class ProductBrowser extends Component
     public function render()
     {
 
-        //$b = Product::with(['categories'])->where('category_id', $this->category->id);
-     
-        $products = Product::search('', function ($search) {
-           
-            return $search;
-        })->query(function ($query) {
-            return $query->whereHas('categories', function ($categories) {
-                $categories->where('category_id', $this->category->id);
-            });
-        })->get();
-        
+
+         
               
         $filters = DB::table('variations')->get()
             ->groupBy('type')->toArray(); 
@@ -56,6 +47,40 @@ class ProductBrowser extends Component
             }
 
         }   
+
+
+        //dd($this->queryFilters);
+        $searchQuery = collect($this->queryFilters)->filter(fn ($filter) => !empty($filter))
+                    ->recursive()
+                    ->map(function ($value) {
+                        return $value->map(fn ($value) => $value );
+                    })
+                    ->flatten()->toArray();
+                    //->join(' AND ');         
+
+       //dd($searchQuery) ;
+        //$b = Product::with(['categories'])->where('category_id', $this->category->id);
+     
+        $products = Product::search('', function ($search) {
+           
+            return $search;
+        })->query(function ($query) {
+            return $query->whereHas('categories', function ($categories) {
+                $categories->where('category_id', $this->category->id);
+            });
+        })->query(function ($query) use ($searchQuery){
+            if($searchQuery){
+                //dd($searchQuery);  
+                return $query->whereHas('variations', function($variations) use($searchQuery) {
+                    $variations->whereIn('title', $searchQuery);
+                });
+            }
+
+            return $query;
+            
+        })
+        ->get();
+       
  
 
         return view('livewire.product-browser', [
