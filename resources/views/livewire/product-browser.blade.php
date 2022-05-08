@@ -16,12 +16,12 @@
 
             <div class="space-y-1">
                 <div class="space-y-1">
-                    <div class="font-semibold">Max price ($0)</div>
+                    <div class="font-semibold">Max price ({{ money($priceRange['max'])}})</div>
                     <div class="flex items-center space-x-2">
-                        <input type="range" min="0" max="">
+                        <input type="range" min="0" max="{{ $maxPrice }}" wire:model="priceRange.max">
                     </div>
                 </div>
-        
+                @if ($products->count()) 
                 <div class="space-y-1">
                     @foreach ($filters as $title => $filter)
                         <div class="font-semibold">{{ Str::title($title) }} </div>
@@ -33,6 +33,8 @@
                         @endforeach
                     @endforeach
                 </div>
+                @endif
+                
             </div>
         </div>
     </div>

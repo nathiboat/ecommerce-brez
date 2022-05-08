@@ -14,6 +14,10 @@ class ProductBrowser extends Component
 
     public $queryFilters = [];
 
+    public $priceRange = [
+        'max' => null
+    ];
+
     public function mount()
     {
         $this->queryFilters = $this->category->products->pluck('variations')->flatten()
@@ -25,8 +29,6 @@ class ProductBrowser extends Component
 
     public function render()
     {
-
-
          
               
         $filters = DB::table('variations')->get()
@@ -56,7 +58,10 @@ class ProductBrowser extends Component
                         return $value->map(fn ($value) => $value );
                     })
                     ->flatten()->toArray();
-                    //->join(' AND ');         
+                    //->join(' AND ');      
+                    
+        $maxPrice =  $this->category->products->max('price');    
+        $this->priceRange['max'] = $this->priceRange['max'] ?: $maxPrice; 
 
        //dd($searchQuery) ;
         //$b = Product::with(['categories'])->where('category_id', $this->category->id);
@@ -72,11 +77,17 @@ class ProductBrowser extends Component
             if($searchQuery){
                 //dd($searchQuery);  
                 return $query->whereHas('variations', function($variations) use($searchQuery) {
-                    $variations->whereIn('title', $searchQuery);
+                    $variations
+                    ->where('price', '<=', $this->priceRange['max'])
+                    ->whereIn('title', $searchQuery);
                 });
             }
 
-            return $query;
+            return $query->whereHas('variations', function($variations) use($searchQuery) {
+                $variations
+                ->where('price', '<=', $this->priceRange['max']);
+               
+            });
             
         })
         ->get();
@@ -85,7 +96,8 @@ class ProductBrowser extends Component
 
         return view('livewire.product-browser', [
             'products'=> $products,
-            'filters' => $attrs
+            'filters' => $attrs,
+            'maxPrice' => $maxPrice
         ]);
     }
 }
