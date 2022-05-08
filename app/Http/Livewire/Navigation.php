@@ -3,10 +3,12 @@
 namespace App\Http\Livewire;
 
 use App\Cart\Contracts\CartInterface;
+use App\Models\Product;
 use Livewire\Component;
 
 class Navigation extends Component
 {
+    public $searchQuery = "";
 
     protected $listeners = [
         'cart.updated' => '$refresh'
@@ -18,8 +20,17 @@ class Navigation extends Component
         return $cart;
     }
 
+    public function clearSearch()
+    {
+        $this->searchQuery = '';
+    }
+
     public function render(CartInterface $cart)
     {
-        return view('livewire.navigation');
+        $products = Product::search($this->searchQuery)->get();
+
+        return view('livewire.navigation', [
+            'products' => $products
+        ]);
     }
 }

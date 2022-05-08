@@ -60,7 +60,7 @@ class ProductBrowser extends Component
                     ->flatten()->toArray();
                     //->join(' AND ');      
                     
-        $maxPrice =  $this->category->products->max('price');    
+        $maxPrice =  $this->category->products->pluck('variations')->flatten()->max('price');    
         $this->priceRange['max'] = $this->priceRange['max'] ?: $maxPrice; 
 
        //dd($searchQuery) ;
