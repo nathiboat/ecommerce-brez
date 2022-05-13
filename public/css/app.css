@@ -648,6 +648,9 @@ select {
 .col-span-5 {
   grid-column: span 5 / span 5;
 }
+.col-span-3 {
+  grid-column: span 3 / span 3;
+}
 .col-span-4 {
   grid-column: span 4 / span 4;
 }
@@ -717,6 +720,9 @@ select {
 }
 .mt-1 {
   margin-top: 0.25rem;
+}
+.mr-1 {
+  margin-right: 0.25rem;
 }
 .mt-6 {
   margin-top: 1.5rem;
@@ -801,6 +807,9 @@ select {
 }
 .w-6 {
   width: 1.5rem;
+}
+.w-16 {
+  width: 4rem;
 }
 .max-w-sm {
   max-width: 24rem;
@@ -927,6 +936,11 @@ select {
   --tw-space-y-reverse: 0;
   margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
+}
+.space-y-3 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
 .space-x-1 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-x-reverse: 0;
@@ -1203,6 +1217,10 @@ select {
 .text-indigo-500 {
   --tw-text-opacity: 1;
   color: rgb(99 102 241 / var(--tw-text-opacity));
+}
+.text-red-500 {
+  --tw-text-opacity: 1;
+  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 .text-red-600 {
   --tw-text-opacity: 1;

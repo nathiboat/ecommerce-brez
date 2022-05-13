@@ -21,18 +21,18 @@
                         <input type="range" min="0" max="{{ $maxPrice }}" wire:model="priceRange.max">
                     </div>
                 </div>
-                @if ($products->count()) 
-                <div class="space-y-1">
-                    @foreach ($filters as $title => $filter)
-                        <div class="font-semibold">{{ Str::title($title) }} </div>
-                        @foreach ($filter as $option => $count)
-                            <div class="flex items-center space-x-2">
-                                <input type="checkbox" wire:model="queryFilters.{{ $title }}" id="{{ $title }}__{{ strtolower($option) }}" value="{{ $option }}"> 
-                                <label for="">{{ Str::title($option)}} ({{$count }})</label>
-                            </div>   
+                @if ($category->products->count()) 
+                    <div class="space-y-1">
+                        @foreach ($filters as $title => $filter)
+                            <div class="font-semibold">{{ Str::title($title) }} </div>
+                            @foreach ($filter as $option => $count)
+                                <div class="flex items-center space-x-2">
+                                    <input type="checkbox" wire:model="queryFilters.{{ $title }}" id="{{ $title }}__{{ strtolower($option) }}" value="{{ $option }}"> 
+                                    <label for="">{{ Str::title($option)}} ({{$count }})</label>
+                                </div>   
+                            @endforeach
                         @endforeach
-                    @endforeach
-                </div>
+                    </div>
                 @endif
                 
             </div>
