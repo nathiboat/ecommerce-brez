@@ -15,6 +15,8 @@ class CartIndexController extends Controller
 
         } catch (QuantityNoLongerAvailable $e) {
 
+            session()->flash('notification', 'Some items or quantities in your cart have become unavailable.');
+
             $cart->syncAvailableQuantities();
         }
        
