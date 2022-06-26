@@ -48,4 +48,11 @@ class Order extends Model
     {
         return $this->belongsTo(shippingAddress::class);
     }
+
+    public function variations() 
+    {
+        return $this->belongsToMany(Variation::class)
+            ->withPivot(['quantity'])
+            ->withTimestamps();
+    }
 }

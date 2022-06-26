@@ -97,6 +97,17 @@ class Checkout extends Component
 
 
         $order->save();
+
+        $order->variations()->attach(
+            $cart->contents()->mapWithKeys(function($variation) {
+                return [
+                    $variation->id => [
+                        'quantity' => $variation->pivot->quantity
+                    ]
+                ];
+            })
+            ->toArray()
+        );
     }
 
     public function mount()
